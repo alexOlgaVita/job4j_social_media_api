@@ -1,12 +1,12 @@
 package ru.job4j.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode.Include;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,7 +23,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Include
-    private Integer id;
+    private Long id;
 
     private String name;
     private String description;
@@ -35,16 +35,16 @@ public class Post {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "posts_photos", joinColumns = {
-            @JoinColumn(name = "post_id", nullable = false, updatable = false)},
+            @JoinColumn(name = "post_id", nullable = false, updatable = false, insertable = false)},
             inverseJoinColumns = {
-                    @JoinColumn(name = "photo_id", nullable = false, updatable = false)})
+                    @JoinColumn(name = "photo_id", nullable = false, updatable = false, insertable = false)})
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "participates", joinColumns = {
-            @JoinColumn(name = "post_id", nullable = false, updatable = false)},
+            @JoinColumn(name = "post_id", nullable = false, updatable = false, insertable = false)},
             inverseJoinColumns = {
-                    @JoinColumn(name = "user_id", nullable = false, updatable = false)})
+                    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)})
     private Set<Photo> participates = new HashSet<>();
 
     @Override
