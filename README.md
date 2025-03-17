@@ -1,4 +1,4 @@
-# job4j_cars
+# job4j_social_media_api
 
 ### О проекте
 

@@ -6,15 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.job4j.model.Post;
 import ru.job4j.model.User;
-import ru.job4j.repository.PhotoRepository;
 import ru.job4j.repository.PostRepository;
 import ru.job4j.repository.UserRepository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -22,7 +17,7 @@ public class Job4jSocialMediaApiApplication implements CommandLineRunner {
 
     private UserRepository userRepository;
     private PostRepository postRepository;
-    private PhotoRepository photoRepository;
+/*    private PhotoRepository photoRepository;*/
 
     public static void main(String[] args) {
         SpringApplication.run(Job4jSocialMediaApiApplication.class, args);
@@ -30,16 +25,20 @@ public class Job4jSocialMediaApiApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("Hello");
         userRepository.deleteAll();
-        List<Post> participates = new ArrayList<>();
+        Set<Post> posts = new HashSet<>();
+/*
         Set<User> friends = new HashSet<>();
-        Set<User> friendLoans = new HashSet<>();
-
+        Set<User> potentialFriends = new HashSet<>();
+ */
+        postRepository.saveAll(posts);
         User user = new User(0L, "Alex", "email", "password",
-                participates, friends, friendLoans, null);
-        userRepository.save(user);
+                posts, TimeZone.getDefault().getDisplayName());
+
+        /*        userRepository.save(user); */
         System.out.println(user);
         System.out.println(userRepository.findAll().iterator().hasNext());
-        System.out.println(userRepository.findAll().iterator().next());
+        /* System.out.println(userRepository.findAll().iterator().next()); */
     }
 }

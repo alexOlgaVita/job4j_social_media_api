@@ -45,7 +45,7 @@ public class Post {
             @JoinColumn(name = "post_id", nullable = false, updatable = false, insertable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)})
-    private Set<Photo> participates = new HashSet<>();
+    private Set<User> participates = new HashSet<>();
 
     @Override
     public String toString() {
