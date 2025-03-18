@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.job4j.Job4jSocialMediaApiApplication;
 import ru.job4j.model.Post;
 
-import java.time.LocalDateTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -26,12 +26,12 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void whenSavePostThenFindById() {
+    public void whenSavePostThenFindById() throws ParseException {
         var post = new Post();
         post.setName("Продажа книг");
         post.setDescription("Продаются книги...");
         post.setParticipates(Set.of());
-        post.setCreated(LocalDateTime.now());
+        post.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post);
         var foundPost = postRepository.findById(post.getId());
         assertThat(foundPost).isPresent();
@@ -39,17 +39,17 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void whenSomePostsThenFindAllReturnAllPosts() {
+    public void whenSomePostsThenFindAllReturnAllPosts() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post1);
         postRepository.save(post2);
         var posts = postRepository.findAll();
@@ -64,17 +64,17 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void whenFindByIdThenReturnOne() {
+    public void whenFindByIdThenReturnOne() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post1);
         postRepository.save(post2);
         assertThat(postRepository.findById(post1.getId()).get())
@@ -88,34 +88,34 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void when2PostsThenCountReturn2() {
+    public void when2PostsThenCountReturn2() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post1);
         postRepository.save(post2);
         assertThat(postRepository.count()).isEqualTo(2);
     }
 
     @Test
-    public void whenSaveAllPostsThenFindAllReturnAllPosts() {
+    public void whenSaveAllPostsThenFindAllReturnAllPosts() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.saveAll(List.of(post1, post2));
         var posts = postRepository.findAll();
         assertThat(posts).hasSize(2);
@@ -123,17 +123,17 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void whenSavePostsThenFindAllReturnTrue() {
+    public void whenSavePostsThenFindAllReturnTrue() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post1);
         postRepository.save(post2);
         assertThat(postRepository.existsById(post1.getId())).isTrue();
@@ -141,17 +141,17 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void whenIsPostThenDeleteByIdOk() {
+    public void whenIsPostThenDeleteByIdOk() throws ParseException {
         var post1 = new Post();
         post1.setName("Продажа книг");
         post1.setDescription("Продаются книги...");
         post1.setParticipates(Set.of());
-        post1.setCreated(LocalDateTime.now());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         var post2 = new Post();
         post2.setName("Рецепт сахарного печенья");
         post2.setDescription("Инградиенты...");
         post2.setParticipates(Set.of());
-        post2.setCreated(LocalDateTime.now());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post1);
         postRepository.save(post2);
         postRepository.deleteById(post1.getId());

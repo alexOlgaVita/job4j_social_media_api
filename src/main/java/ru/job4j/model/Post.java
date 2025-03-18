@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +28,9 @@ public class Post {
 
     private String name;
     private String description;
-    private LocalDateTime created;
+
+    @Temporal(TemporalType.DATE)
+    private Date created;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
