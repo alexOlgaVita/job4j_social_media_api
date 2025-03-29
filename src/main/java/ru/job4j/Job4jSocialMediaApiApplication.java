@@ -9,7 +9,9 @@ import ru.job4j.model.User;
 import ru.job4j.repository.PostRepository;
 import ru.job4j.repository.UserRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TimeZone;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class Job4jSocialMediaApiApplication implements CommandLineRunner {
 
     private UserRepository userRepository;
     private PostRepository postRepository;
-/*    private PhotoRepository photoRepository;*/
+    /*    private PhotoRepository photoRepository;*/
 
     public static void main(String[] args) {
         SpringApplication.run(Job4jSocialMediaApiApplication.class, args);
@@ -34,7 +36,7 @@ public class Job4jSocialMediaApiApplication implements CommandLineRunner {
  */
         postRepository.saveAll(posts);
         User user = new User(0L, "Alex", "email", "password",
-                posts, TimeZone.getDefault().getDisplayName());
+                posts, new HashSet<>(), new HashSet<>(), TimeZone.getDefault().getDisplayName());
 
         /*        userRepository.save(user); */
         System.out.println(user);

@@ -3,7 +3,9 @@ package ru.job4j.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "photos")
@@ -20,6 +22,13 @@ public class Photo {
 
     private String name;
     private String path;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "posts_photos", joinColumns = {
+            @JoinColumn(name = "photo_id", nullable = false, updatable = false, insertable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "post_id", nullable = false, updatable = false, insertable = false)})
+    private Set<Photo> posts = new HashSet<>();
 
     public Photo(String name) {
         this.name = name;

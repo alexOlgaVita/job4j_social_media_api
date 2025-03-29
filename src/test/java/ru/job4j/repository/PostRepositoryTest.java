@@ -160,4 +160,51 @@ class PostRepositoryTest {
         postRepository.deleteById(post2.getId());
         assertThat(postRepository.existsById(post2.getId())).isFalse();
     }
+
+    @Test
+    public void whenUpdateNameAndDescriptionOk() throws ParseException {
+        var post1 = new Post();
+        post1.setName("Продажа книг");
+        post1.setDescription("Продаются книги...");
+        post1.setParticipates(Set.of());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
+        postRepository.save(post1);
+        String newName = "Продажа книг НОВАЯ";
+        String newDescription = "Продаются книги... новая распродажа";
+        int rowCountUpdated = postRepository.updatePostByNameAndDescription(post1.getId(),
+                newName,
+                newDescription);
+
+        assertThat(rowCountUpdated).isEqualTo(1);
+        assertThat(postRepository.findById(post1.getId()).get().getName()).isEqualTo(newName);
+        assertThat(postRepository.findById(post1.getId()).get().getDescription()).isEqualTo(newDescription);
+    }
+
+    @Test
+    public void whenDeletePostOk() throws ParseException {
+        var post1 = new Post();
+        post1.setName("Продажа книг");
+        post1.setDescription("Продаются книги...");
+        post1.setParticipates(Set.of());
+        post1.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
+        postRepository.save(post1);
+        var post2 = new Post();
+        post2.setName("Рецепт сахарного печенья");
+        post2.setDescription("Инградиенты...");
+        post2.setParticipates(Set.of());
+        post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
+        postRepository.save(post2);
+        int rowCountDeleted = postRepository.deletePostById(post1.getId());
+
+        assertThat(rowCountDeleted).isEqualTo(1);
+
+        assertThat(postRepository.count()).isEqualTo(1);
+
+        assertThat(postRepository.findById(post2.getId()).get())
+                .usingRecursiveComparison().comparingOnlyFields("name", "description")
+                .isEqualTo(post2);
+
+        assertThat(postRepository.findById(post1.getId()))
+                .isEmpty();
+    }
 }

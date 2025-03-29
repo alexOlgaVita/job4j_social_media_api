@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TimeZone;
 
 @Data
 @Entity
@@ -23,7 +25,7 @@ public class User {
 
     private String password;
 
-   /* @ManyToMany(mappedBy = "participates", fetch = FetchType.LAZY) */
+    /* @ManyToMany(mappedBy = "participates", fetch = FetchType.LAZY) */
     /* альтернатива маппед: обычная */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "participates", joinColumns = {
@@ -32,7 +34,6 @@ public class User {
                     @JoinColumn(name = "post_id", nullable = false, updatable = false, insertable = false)})
     private Set<Post> posts = new HashSet<>();
 
-/*
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "friends",
@@ -40,8 +41,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "user_id2")}
     )
     private Set<User> friends = new HashSet<>();
- */
-/*
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "friendLoans",
@@ -49,7 +49,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "user_id2")}
     )
     private Set<User> potentialFriends = new HashSet<>();
-*/
     @Column(name = "user_zone")
     private String timezone = TimeZone.getDefault().getDisplayName();
 }
