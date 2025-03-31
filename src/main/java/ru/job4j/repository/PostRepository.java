@@ -43,7 +43,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Post p where p.id = :id")
-    int deletePostById(@Param("id") Long id);
+    int delete(@Param("id") Long id);
 
     /**
      * Список всех постов подписчиков пользователя от сортированных от самых новых к старым с пагинацией.
@@ -67,4 +67,18 @@ public interface PostRepository extends CrudRepository<Post, Long> {
             + " )"
     )
     List<Post> findAllSubSubscribersPosts(@Param("name") String name, @Param("password") String password);
+
+    @Transactional
+    @Modifying
+    @Query("""
+            update Post p
+            set p.name = :#{#post.name},
+            p.description = :#{#post.description},
+            p.created = :#{#post.created},
+            p.user = :#{#post.user},
+            p.photos = :#{#post.photos},
+            p.participates = :#{#post.photos}
+            where p.id=:#{#post.id}
+            """)
+    int update(@Param("post") Post post);
 }

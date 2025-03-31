@@ -31,6 +31,12 @@ public class SimplePostService implements PostService {
         return postMapper.getModelFromEntityCustom(postRepository.save(post));
     }
 
+    @Override
+    public PostDto save(PostDto postDto) {
+        Post post = postMapper.getEntityFromModelCustom(postDto);
+        return postMapper.getModelFromEntityCustom(postRepository.save(post));
+    }
+
     private void saveNewFile(Post post, List<PhotoDto> images) {
         Set<Photo> savedPhotos = new HashSet<>();
         List<Photo> savedPhotosList = new ArrayList<>();
@@ -43,13 +49,13 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public Post update(PostDto postDto) {
-        return postRepository.save(postMapper.getEntityFromModelCustom(postDto));
+    public boolean update(Post post) {
+        return postRepository.update(post) > 0L;
     }
 
     @Override
     public int delete(long id) {
-        return postRepository.deletePostById(id);
+        return postRepository.delete(id);
     }
 
     @Override
@@ -75,5 +81,10 @@ public class SimplePostService implements PostService {
     public Optional<PostDto> findById(long id) {
         return (postRepository.findById(id).isPresent())
                 ? Optional.ofNullable(postMapper.getModelFromEntityCustom(postRepository.findById(id).get())) : Optional.empty();
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return postRepository.delete(id) > 0L;
     }
 }

@@ -10,4 +10,10 @@ public interface UserService {
     Optional<User> save(User todoUser);
 
     Optional<User> findByLoginPassword(String login, String password);
+
+    boolean update(User user);
+
+    Optional<User> findById(Long id);
+
+    boolean deleteById(Long id);
 }

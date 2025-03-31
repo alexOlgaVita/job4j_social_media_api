@@ -24,4 +24,18 @@ public class SimpleUserService implements UserService {
     public Optional<User> findByLoginPassword(String login, String password) {
         return userRepository.findByLoginPassword(login, password);
     }
+
+    @Override
+    public boolean update(User user) {
+        return userRepository.update(user) > 0L;
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public boolean deleteById(Long id) {
+        return userRepository.delete(id) > 0L;
+    }
 }

@@ -12,11 +12,15 @@ public interface PostService {
 
     PostDto create(PostDto post, List<PhotoDto> images);
 
-    Post update(PostDto post);
+    PostDto save(PostDto post);
+
+    boolean update(Post post);
 
     int delete(long id);
 
     Collection<PostDto> findAll();
 
     Optional<PostDto> findById(long id);
+
+    boolean deleteById(Long id);
 }

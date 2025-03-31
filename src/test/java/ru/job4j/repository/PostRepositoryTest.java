@@ -194,7 +194,7 @@ class PostRepositoryTest {
         post2.setParticipates(Set.of());
         post2.setCreated(new SimpleDateFormat("yyyy-MM-dd").parse("2022-03-11"));
         postRepository.save(post2);
-        int rowCountDeleted = postRepository.deletePostById(post1.getId());
+        int rowCountDeleted = postRepository.delete(post1.getId());
 
         assertThat(rowCountDeleted).isEqualTo(1);
 

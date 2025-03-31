@@ -49,6 +49,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "user_id2")}
     )
     private Set<User> potentialFriends = new HashSet<>();
+
     @Column(name = "user_zone")
     private String timezone = TimeZone.getDefault().getDisplayName();
 }

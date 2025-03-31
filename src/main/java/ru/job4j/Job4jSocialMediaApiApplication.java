@@ -13,8 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
+/*
 @SpringBootApplication
 @AllArgsConstructor
+ */
 public class Job4jSocialMediaApiApplication implements CommandLineRunner {
 
     private UserRepository userRepository;
@@ -22,6 +24,7 @@ public class Job4jSocialMediaApiApplication implements CommandLineRunner {
     /*    private PhotoRepository photoRepository;*/
 
     public static void main(String[] args) {
+
         SpringApplication.run(Job4jSocialMediaApiApplication.class, args);
     }
 
