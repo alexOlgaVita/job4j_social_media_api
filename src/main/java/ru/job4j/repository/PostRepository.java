@@ -28,7 +28,13 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     @Query("from Post")
     @EntityGraph(attributePaths = {"photos"})
-    List<Post> findAll2();
+    List<Post> findAll();
+
+    @Query("select pp from Post as pp"
+            + " WHERE pp.user in (select u from User as u WHERE u.name = :name and u.password = :password"
+            + " )"
+    )
+    List<Post> findPostsByUser(@Param("name") String name, @Param("password") String password);
 
     @Query("from Post as u where u.id = :id")
     @EntityGraph(attributePaths = {"photos"}, type = EntityGraph.EntityGraphType.FETCH)
@@ -62,4 +68,3 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     )
     List<Post> findAllSubSubscribersPosts(@Param("name") String name, @Param("password") String password);
 }
-

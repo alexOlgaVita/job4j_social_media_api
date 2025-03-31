@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("from User as u where u.name = :name and u.password = :password")
-    Optional<User> findByNameAndPassword(@Param("name") String name, @Param("password") String password);
+    Optional<User> findByLoginPassword(@Param("name") String name, @Param("password") String password);
 
     @Query("select f, u from User as u"
             + " JOIN FETCH u.potentialFriends f"

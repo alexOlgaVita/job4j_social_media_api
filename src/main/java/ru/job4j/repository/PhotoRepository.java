@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import ru.job4j.model.Photo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PhotoRepository extends CrudRepository<Photo, Long> {
 
@@ -18,4 +19,7 @@ public interface PhotoRepository extends CrudRepository<Photo, Long> {
 
     @Query("from Photo")
     List<Photo> findAll();
+
+    @Query("from Photo p where p.id = :id")
+    Optional<Photo> findById(@Param("id") Long id);
 }
