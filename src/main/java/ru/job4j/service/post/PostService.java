@@ -2,6 +2,7 @@ package ru.job4j.service.post;
 
 import ru.job4j.dto.PhotoDto;
 import ru.job4j.dto.PostDto;
+import ru.job4j.dto.PostUserMinDto;
 import ru.job4j.model.Post;
 
 import java.util.Collection;
@@ -23,4 +24,6 @@ public interface PostService {
     Optional<PostDto> findById(long id);
 
     boolean deleteById(Long id);
+
+    Collection<PostUserMinDto> findPostsByUserIds(List<Long> userIds);
 }

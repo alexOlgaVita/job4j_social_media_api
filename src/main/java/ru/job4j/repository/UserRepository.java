@@ -28,16 +28,16 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Transactional
     @Modifying
     @Query("""
-        update User u
-        set u.name = :#{#user.name},
-        u.email = :#{#user.email},
-        u.password = :#{#user.password},
-        u.posts = :#{#user.posts},
-        u.friends = :#{#user.friends},
-        u.potentialFriends = :#{#user.potentialFriends},
-        u.timezone = :#{#user.timezone}
-        where u.id=:#{#user.id}
-        """)
+            update User u
+            set u.name = :#{#user.name},
+            u.email = :#{#user.email},
+            u.password = :#{#user.password},
+            u.posts = :#{#user.posts},
+            u.friends = :#{#user.friends},
+            u.potentialFriends = :#{#user.potentialFriends},
+            u.timezone = :#{#user.timezone}
+            where u.id=:#{#user.id}
+            """)
     int update(@Param("user") User user);
 
     @Query("from User as u where u.id = :id")
@@ -46,4 +46,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Modifying
     @Query("delete from User u where u.id=:pId")
     int delete(@Param("pId") Long id);
+
+    @Query("from User")
+    List<User> findAll();
 }

@@ -3,7 +3,9 @@ package ru.job4j.service.post;
 import org.springframework.stereotype.Service;
 import ru.job4j.dto.PhotoDto;
 import ru.job4j.dto.PostDto;
+import ru.job4j.dto.PostUserMinDto;
 import ru.job4j.mapper.PostMapper;
+import ru.job4j.mapper.PostUserMinMapper;
 import ru.job4j.model.Photo;
 import ru.job4j.model.Post;
 import ru.job4j.repository.PostRepository;
@@ -17,11 +19,13 @@ public class SimplePostService implements PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final PhotoService photoService;
+    private final PostUserMinMapper postUserMinMapper;
 
-    public SimplePostService(PostRepository postRepository, PostMapper postMapper, PhotoService photoService) {
+    public SimplePostService(PostRepository postRepository, PostMapper postMapper, PhotoService photoService, PostUserMinMapper postUserMinMapper) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.photoService = photoService;
+        this.postUserMinMapper = postUserMinMapper;
     }
 
     @Override
@@ -86,5 +90,12 @@ public class SimplePostService implements PostService {
     @Override
     public boolean deleteById(Long id) {
         return postRepository.delete(id) > 0L;
+    }
+
+    @Override
+    public Collection<PostUserMinDto> findPostsByUserIds(List<Long> userIds) {
+        return (!postRepository.findPostsByUserIds(userIds).isEmpty())
+                ? (postRepository.findPostsByUserIds(userIds)
+                .stream().map(e -> postUserMinMapper.getModelFromEntity(e)).toList()) : List.of();
     }
 }

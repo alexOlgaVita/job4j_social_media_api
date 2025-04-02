@@ -5,6 +5,7 @@ import ru.job4j.dto.PostDto;
 import ru.job4j.model.Post;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +49,7 @@ public interface PostMapper {
     }
 
     private LocalDateTime toLocalDateTime(Date localDateTime) {
-        return LocalDateTime.ofInstant(
-                localDateTime.toInstant(), ZoneId.systemDefault());
+        return Instant.ofEpochMilli(localDateTime.getTime()).atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 }

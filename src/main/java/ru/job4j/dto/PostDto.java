@@ -21,7 +21,6 @@ public class PostDto {
     private User user;
     private String zonedDateTime;
     private Set<Photo> photos;
-    /*    private List<Photo> photos;*/
 
     public PostDto(long id,
                    String description,
@@ -30,7 +29,6 @@ public class PostDto {
                    User user,
                    String zonedDateTime,
                    Set<Photo> photos) {
-        /*        List<Photo> photos) { */
         this.id = id;
         this.description = description;
         this.created = created;

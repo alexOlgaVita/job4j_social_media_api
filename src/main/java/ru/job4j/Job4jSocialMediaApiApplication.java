@@ -1,9 +1,7 @@
 package ru.job4j;
 
-import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.job4j.model.Post;
 import ru.job4j.model.User;
 import ru.job4j.repository.PostRepository;

@@ -36,6 +36,12 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     )
     List<Post> findPostsByUser(@Param("name") String name, @Param("password") String password);
 
+    @Query("select pp from Post as pp"
+            + " WHERE pp.user in (select u from User as u WHERE u.id in :userIds"
+            + " )"
+    )
+    List<Post> findPostsByUserIds(@Param("userIds") List<Long> userIds);
+
     @Query("from Post as u where u.id = :id")
     @EntityGraph(attributePaths = {"photos"}, type = EntityGraph.EntityGraphType.FETCH)
     Optional<Post> findAllPhotosByPostId2(@Param("id") Long id);

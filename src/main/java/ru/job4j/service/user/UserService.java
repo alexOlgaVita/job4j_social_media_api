@@ -3,6 +3,7 @@ package ru.job4j.service.user;
 
 import ru.job4j.model.User;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public interface UserService {
@@ -16,4 +17,6 @@ public interface UserService {
     Optional<User> findById(Long id);
 
     boolean deleteById(Long id);
+
+    Collection<User> findAll();
 }
