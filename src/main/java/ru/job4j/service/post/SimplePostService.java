@@ -1,6 +1,8 @@
 package ru.job4j.service.post;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import ru.job4j.dto.PhotoDto;
 import ru.job4j.dto.PostDto;
 import ru.job4j.dto.PostUserMinDto;
@@ -13,6 +15,7 @@ import ru.job4j.service.photo.PhotoService;
 
 import java.util.*;
 
+@Validated
 @Service
 public class SimplePostService implements PostService {
 
@@ -36,7 +39,7 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public PostDto save(PostDto postDto) {
+    public PostDto save(@Valid PostDto postDto) {
         Post post = postMapper.getEntityFromModelCustom(postDto);
         return postMapper.getModelFromEntityCustom(postRepository.save(post));
     }
@@ -69,9 +72,9 @@ public class SimplePostService implements PostService {
             result = postRepository.findAll().stream()
                     .map(e -> postMapper.getModelFromEntityCustom(e))
                     .map(e -> new PostDto(e.getId(),
+                            e.getName(),
                             e.getDescription(),
                             e.getCreated(),
-                            e.isDone(),
                             e.getUser(),
                             null,
                             e.getPhotos()

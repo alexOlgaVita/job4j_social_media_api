@@ -18,6 +18,7 @@ public interface PostMapper {
         PostDto postDto = new PostDto();
         if (post != null) {
             postDto.setId(post.getId() == null ? 0 : post.getId());
+            postDto.setName(post.getName());
             postDto.setDescription(post.getDescription());
             postDto.setCreated(toLocalDateTime(post.getCreated()));
             postDto.setUser(post.getUser());
@@ -32,6 +33,7 @@ public interface PostMapper {
         Post post = new Post();
         if (postDto != null) {
             post.setId(postDto.getId() == 0 ? null : postDto.getId());
+            post.setName(postDto.getName());
             post.setDescription(postDto.getDescription());
             post.setCreated(toDate(postDto.getCreated()));
             post.setUser(postDto.getUser());
