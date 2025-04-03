@@ -1,5 +1,11 @@
 package ru.job4j.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.job4j.dto.PostDto;
 import ru.job4j.model.Post;
+import ru.job4j.model.User;
 import ru.job4j.service.post.PostService;
 
+@Tag(name = "PostController", description = "PostController management APIs")
 @Validated
 @Slf4j
 @AllArgsConstructor
@@ -21,6 +29,14 @@ import ru.job4j.service.post.PostService;
 public class PostController {
 
     private final PostService postService;
+
+    @Operation(
+            summary = "Retrieve a Post by postId",
+            description = "Get a Post object by specifying its postId. The response is Post object with its fields.",
+            tags = {"Post", "get"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = PostDto.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})})
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> get(@PathVariable("postId")
@@ -31,6 +47,14 @@ public class PostController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @Operation(
+            summary = "Create a new Post",
+            description = "Create a new Post by specifying object PostDto. The response is created PostDto object with postId.",
+            tags = {"Post", "save"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = PostDto.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})})
 
     @PostMapping
     public ResponseEntity<PostDto> save(@RequestBody PostDto post) {
@@ -45,6 +69,14 @@ public class PostController {
                 .body(post);
     }
 
+    @Operation(
+            summary = "Update a Post",
+            description = "Update a Post by specifying object post. The response is updated Post object.",
+            tags = {"Post", "update"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})})
+
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody Post post) {
         if (postService.update(post)) {
@@ -53,11 +85,27 @@ public class PostController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Update a Post partially",
+            description = "Update a Post by specifying fields of object post. The response is empty.",
+            tags = {"Post", "change"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})})
+
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
     public void change(@RequestBody Post post) {
         postService.update(post);
     }
+
+    @Operation(
+            summary = "Delete a Post",
+            description = "Delete a Post by specifying postId. The response is empty.",
+            tags = {"Post", "removeById"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})})
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> removeById(@PathVariable long postId) {

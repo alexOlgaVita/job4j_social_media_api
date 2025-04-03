@@ -1,5 +1,6 @@
 package ru.job4j.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode.Include;
@@ -25,9 +26,13 @@ public class Post {
     @Include
     private Long id;
 
+    @Schema(description = "Name title", example = "Car for sale")
     private String name;
+
+    @Schema(description = "Content of post", example = "Car for sale")
     private String description;
 
+    @Schema(description = "Date of creation", example = "2023-10-15T15:15:15")
     @Temporal(TemporalType.DATE)
     private Date created;
 

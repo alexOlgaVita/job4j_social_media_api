@@ -1,5 +1,6 @@
 package ru.job4j.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
+@Schema(description = "User Model Information")
 @Data
 @Entity
 @AllArgsConstructor
@@ -22,16 +24,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "username не может быть пустым")
+    @Schema(description = "Name title", example = "Mediator")
+    @NotBlank(message = "Name не может быть пустым")
     @Length(min = 4,
             max = 15,
             message = "username должно быть не менее 4 и не более 15 символов")
     private String name;
 
+    @Schema(description = "email of User", example = "harry@mail.com")
     @Pattern(regexp = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*\\.\\w{2,4}",
             message = "email должен соответствовать паттерну почтового адреса")
     private String email;
 
+    @Schema(description = "password of User", example = "pAssword_$#")
     @NotBlank(message = "password не может быть пустым")
     @Length(min = 5,
             max = 15,
